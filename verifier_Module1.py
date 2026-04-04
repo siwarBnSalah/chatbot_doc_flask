@@ -517,7 +517,7 @@ def verify_cross() -> StepReport:
 
 def run_all_verifications(save_report: bool = False):
     print("\n" + "█" * 65)
-    print("  VÉRIFICATEUR RAG — Pipeline Flask doc_support_rag")
+    print("  VÉRIFICATEUR RAG — Pipeline Flask chatbot_doc_flask")
     print("█" * 65)
 
     reports = []
