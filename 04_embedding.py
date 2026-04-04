@@ -15,9 +15,9 @@ Dépendances :
     pip install sentence-transformers chromadb torch
 
 Usage :
-    python 03_embedding.py           # construction complète
-    python 03_embedding.py --reset   # repart de zéro
-    python 03_embedding.py --stats   # statistiques uniquement
+    python 04_embedding.py           # construction complète
+    python 04_embedding.py --reset   # repart de zéro
+    python 04_embedding.py --stats   # statistiques uniquement
 """
 
 from __future__ import annotations
