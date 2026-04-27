@@ -1,127 +1,121 @@
-📘 Chatbot RAG Intelligent (Groq + Agents IA)
+# 🚀 Chatbot RAG Intelligent
 
-🔥 Version: version-groq
-🤖 RAG + Agents + Groq LLM + Evaluation
+<p align="center">
+  <img src="https://img.shields.io/badge/Project-PFE-blue?style=for-the-badge"/>
+  <img src="https://img.shields.io/badge/RAG-Enabled-green?style=for-the-badge"/>
+  <img src="https://img.shields.io/badge/Groq-LLM-orange?style=for-the-badge"/>
+  <img src="https://img.shields.io/badge/Agents-AI-purple?style=for-the-badge"/>
+  <img src="https://img.shields.io/badge/Status-Active-success?style=for-the-badge"/>
+</p>
 
-📌 Table des matières
-🧠 Aperçu
-🏗️ Architecture
+---
+
+<p align="center">
+  <img src="https://img.shields.io/badge/Version-version--groq-black?style=flat-square"/>
+</p>
+
+---
+
+## 🌟 Overview
+
+> A next-generation **AI Chatbot system** powered by **RAG (Retrieval-Augmented Generation)**, enhanced with **Agent-based reasoning** and accelerated using **Groq LLM**.
+
+This project transforms traditional document Q&A into an **intelligent multi-agent system** capable of reasoning, filtering, and optimizing responses.
+
+---
+
+## 🧠 Key Idea
+
+👉 Instead of a simple chatbot:
+
+
+User → LLM → Answer ❌
+
+
+We built:
+
+
+User → Agents → Retrieval → Groq LLM → Validation → Smart Answer ✅
+
+
+---
+
+## 🏗️ System Architecture
+
+```text
+User
+  ↓
+RoutingAgent (filter irrelevant queries)
+  ↓
+QueryReformulationAgent (optimize question)
+  ↓
+Vector Search (ChromaDB)
+  ↓
+Groq LLM (fast generation)
+  ↓
+CodeValidationAgent (verify output)
+  ↓
+Final Answer
 ⚙️ Installation
-▶️ Exécution
-📂 Structure du projet
-🤖 Fonctionnalités
-🧪 Pipeline du système
-🛠️ Technologies
-📊 Evaluation
-🚀 Améliorations futures
-👨‍🎓 Auteur
-🧠 Aperçu
-
-Ce projet est un chatbot intelligent basé sur RAG (Retrieval-Augmented Generation) amélioré par une architecture agentique et un modèle LLM rapide via Groq.
-
-👉 Objectif :
-
-répondre aux questions à partir de documents
-améliorer la qualité des réponses avec des agents IA
-optimiser la recherche et la génération
-
-🏗️ Architecture
-Utilisateur
-    ↓
-RoutingAgent (filtrage hors-scope)
-    ↓
-QueryReformulationAgent (optimisation requête)
-    ↓
-Retrieval (ChromaDB vector store)
-    ↓
-Groq LLM (génération réponse)
-    ↓
-CodeValidationAgent (si code présent)
-    ↓
-Réponse finale
-
-⚙️ Installation
-
 git clone https://github.com/siwarBnSalah/chatbot_doc_flask.git
 cd chatbot_doc_flask
 git checkout version-groq
-
-🔹 Environnement virtuel
+🐍 Virtual Environment
 python -m venv venv
 venv\Scripts\activate   # Windows
-
-🔹 Dépendances
+📦 Install Dependencies
 pip install -r requirements.txt
-
-▶️ Exécution
+▶️ Run Project
 python app.py
 
-ou :
+or
 
 streamlit run app.py
-📂 Structure du projet
+📂 Project Structure
 chatbot_doc_flask/
 │
-├── app.py                 # interface principale
-├── chatbot.py            # pipeline RAG
-├── agents.py             # agents IA
-├── test_groq.py          # test LLM Groq
-├── evaluation_reelle.py  # évaluation système
+├── app.py                  # Main interface
+├── chatbot.py              # RAG pipeline
+├── agents.py              # AI Agents logic
+├── test_groq.py           # Groq testing
+├── evaluation_reelle.py   # Evaluation system
 ├── requirements.txt
 │
-├── vector_db/            # base vectorielle ChromaDB
-├── evaluation_output/    # résultats evaluation
-├── data_propre/          # documents source
-
-
-
-🤖 Fonctionnalités
-
-
-✔ Core System
-RAG (retrieval augmented generation)
-recherche sémantique (embeddings)
-génération via Groq LLM
-✔ Agents IA
-RoutingAgent (hors-scope detection)
-QueryReformulationAgent (amélioration requête)
-CodeValidationAgent (validation code)
-✔ Intelligence
-amélioration automatique des questions
-réponses contextualisées
-filtrage intelligent des requêtes
-
-
-🧪 Pipeline du système
-Question utilisateur
-        ↓
-Analyse (RoutingAgent)
-        ↓
-Reformulation (Query Agent)
-        ↓
-Recherche vectorielle (ChromaDB)
-        ↓
-LLM Groq
-        ↓
+├── vector_db/            # ChromaDB storage
+├── evaluation_output/    # Evaluation results
+├── data_propre/          # Documents dataset
+🤖 Features
+🔹 Core RAG System
+Semantic search (Embeddings)
+Vector database (ChromaDB)
+Context-aware generation
+🔹 AI Agents Layer
+🧭 RoutingAgent → filters irrelevant questions
+✍️ QueryReformulationAgent → improves queries
+🧪 CodeValidationAgent → validates outputs
+🔹 LLM Engine
+⚡ Groq API (Ultra-fast inference)
+Context-aware response generation
+🧪 Pipeline Flow
+Question
+   ↓
+Routing Agent
+   ↓
+Query Optimization
+   ↓
+Vector Retrieval
+   ↓
+Groq LLM Generation
+   ↓
 Validation
-        ↓
-Réponse finale
+   ↓
+Final Answer
+🛠️ Tech Stack
+<p align="center"> <img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white"/> <img src="https://img.shields.io/badge/Groq-FF6B00?style=for-the-badge"/> <img src="https://img.shields.io/badge/ChromaDB-00C896?style=for-the-badge"/> <img src="https://img.shields.io/badge/Flask-000000?style=for-the-badge&logo=flask"/> <img src="https://img.shields.io/badge/Streamlit-FF4B4B?style=for-the-badge&logo=streamlit"/> <img src="https://img.shields.io/badge/NLP-DeepLearning-blueviolet?style=for-the-badge"/> </p>
+📊 Evaluation System
+Accuracy measurement
+Response quality analysis
+Visual dashboards
+Real evaluation reports
 
 
-🛠️ Technologies
-Python 🐍
-Groq API 🤖
-ChromaDB 📦
-Sentence Transformers
-Flask / Streamlit
-Pandas / Matplotlib
-
-
-📊 Evaluation
-
-Le système inclut :
-
-accuracy des réponses
-analyse qualitative
-dashboards visuels
-logs d’évaluation
