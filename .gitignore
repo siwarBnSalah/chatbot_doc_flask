@@ -11,3 +11,4 @@ evaluation_output/
 
 # Logs
 *.log
+.env
