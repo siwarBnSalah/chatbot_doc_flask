@@ -24,6 +24,7 @@ Ce projet est un chatbot intelligent basé sur RAG (Retrieval-Augmented Generati
 répondre aux questions à partir de documents
 améliorer la qualité des réponses avec des agents IA
 optimiser la recherche et la génération
+
 🏗️ Architecture
 Utilisateur
     ↓
@@ -38,15 +39,20 @@ Groq LLM (génération réponse)
 CodeValidationAgent (si code présent)
     ↓
 Réponse finale
+
 ⚙️ Installation
+
 git clone https://github.com/siwarBnSalah/chatbot_doc_flask.git
 cd chatbot_doc_flask
 git checkout version-groq
+
 🔹 Environnement virtuel
 python -m venv venv
 venv\Scripts\activate   # Windows
+
 🔹 Dépendances
 pip install -r requirements.txt
+
 ▶️ Exécution
 python app.py
 
@@ -66,7 +72,12 @@ chatbot_doc_flask/
 ├── vector_db/            # base vectorielle ChromaDB
 ├── evaluation_output/    # résultats evaluation
 ├── data_propre/          # documents source
+
+
+
 🤖 Fonctionnalités
+
+
 ✔ Core System
 RAG (retrieval augmented generation)
 recherche sémantique (embeddings)
@@ -79,6 +90,8 @@ CodeValidationAgent (validation code)
 amélioration automatique des questions
 réponses contextualisées
 filtrage intelligent des requêtes
+
+
 🧪 Pipeline du système
 Question utilisateur
         ↓
@@ -93,6 +106,8 @@ LLM Groq
 Validation
         ↓
 Réponse finale
+
+
 🛠️ Technologies
 Python 🐍
 Groq API 🤖
@@ -100,6 +115,8 @@ ChromaDB 📦
 Sentence Transformers
 Flask / Streamlit
 Pandas / Matplotlib
+
+
 📊 Evaluation
 
 Le système inclut :
