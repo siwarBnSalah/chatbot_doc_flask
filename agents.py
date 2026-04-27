@@ -66,7 +66,7 @@ class RetrievalResult:
     chunk_id:    str
     text:        str
     page_title:  str
-    section:     str
+    section:     str 
     source_url:  str
     score:       float
     code_blocks: list = field(default_factory=list)
@@ -162,7 +162,7 @@ class BaseRetriever:
 class RoutingAgent:
     """
     Détecte si la question est dans le périmètre Flask.
-    S'exécute AVANT le retrieval pour économiser les ressources.
+    Version améliorée : réduction des faux positifs (hors-scope).
     """
 
     FLASK_POSITIVE_KEYWORDS = {
@@ -172,96 +172,114 @@ class RoutingAgent:
         "before_request", "after_request", "endpoint", "view function",
         "context", "session", "error handler", "signal", "cli",
         "flask-login", "flask-sqlalchemy", "flask-wtf", "flask-migrate",
-        "déploiement flask", "configuration flask", "testing flask",
     }
 
     OUT_OF_SCOPE_KEYWORDS = {
         "django", "fastapi", "tornado", "react", "vue", "angular",
         "pytorch", "tensorflow", "keras", "pandas", "numpy",
-        "cuisine", "recette", "sport", "météo", "film", "musique",
-        "qui est", "quelle est la capitale", "combien coûte",
+    }
+
+    # ✅ NOUVEAU : blacklist forte (rejet immédiat)
+    HARD_BLACKLIST = {
+        "pib", "capitale", "recette", "cuisine", "carbonara",
+        "sport", "film", "musique",
+        "chatgpt", "openai", "gpt",
+        "tensorflow", "pytorch", "sklearn",
     }
 
     RESPONSES = {
         "other_framework": (
-            "❌ Cette question concerne un autre framework ({framework}), pas Flask. "
-            "Notre assistant est spécialisé exclusivement dans la documentation "
-            "officielle Flask 3.0.x. Consultez la documentation officielle de {framework}."
+            "❌ Cette question concerne un autre framework ({framework}), pas Flask."
         ),
         "non_technical": (
-            "❌ Cette question ne semble pas concerner Flask. "
-            "Notre assistant répond uniquement aux questions sur Flask 3.0.x : "
-            "routes, blueprints, templates, configuration, déploiement..."
+            "❌ Cette question ne concerne pas Flask."
         ),
         "low_relevance": (
-            "⚠️ Je ne trouve pas d'information pertinente dans la documentation Flask "
-            "pour cette question. Essayez de reformuler avec des termes Flask précis."
+            "⚠️ Aucune information pertinente trouvée dans la documentation Flask."
         ),
     }
 
-    def __init__(self, retriever: BaseRetriever, threshold: float = 0.30):
+    def __init__(self, retriever: BaseRetriever, threshold: float = 0.45):  # ✅ seuil augmenté
         self.retriever = retriever
         self.threshold = threshold
 
     def _detect_framework(self, query: str) -> Optional[str]:
-        for fw in ["django", "fastapi", "tornado", "react", "vue", "angular", "express"]:
+        for fw in ["django", "fastapi", "react", "vue", "angular"]:
             if fw in query.lower():
                 return fw
         return None
 
+    def _contains_blacklist(self, query: str) -> bool:
+        q = query.lower()
+        return any(word in q for word in self.HARD_BLACKLIST)
+
     def _kw_score(self, query: str) -> float:
         words = set(re.findall(r'\b\w+\b', query.lower()))
-        pos   = len(words & self.FLASK_POSITIVE_KEYWORDS)
-        neg   = len(words & self.OUT_OF_SCOPE_KEYWORDS)
-        if pos > 0:
-            return min(1.0, 0.5 + pos * 0.2)
-        if neg > 0:
-            return max(0.0, 0.4 - neg * 0.2)
-        return 0.5
+        pos = len(words & self.FLASK_POSITIVE_KEYWORDS)
+        neg = len(words & self.OUT_OF_SCOPE_KEYWORDS)
+
+        # ✅ Pondération améliorée
+        score = 0.5 + (pos * 0.15) - (neg * 0.25)
+        return max(0.0, min(1.0, score))
 
     def run(self, query: str) -> dict:
-        # Test 1 : autre framework
+
+        # ✅ 0. Blacklist forte (ultra important)
+        if self._contains_blacklist(query):
+            return {
+                "in_scope": False,
+                "action": "reject",
+                "reason": "Mot blacklist détecté",
+                "response": self.RESPONSES["non_technical"],
+            }
+
+        # 1. Détection framework
         fw = self._detect_framework(query)
         if fw:
             return {
-                "in_scope":  False,
-                "action":    "reject",
-                "reason":    f"Autre framework détecté : {fw}",
-                "response":  self.RESPONSES["other_framework"].format(framework=fw),
+                "in_scope": False,
+                "action": "reject",
+                "reason": f"Autre framework : {fw}",
+                "response": self.RESPONSES["other_framework"].format(framework=fw),
             }
 
-        # Test 2 : score mots-clés
-        if self._kw_score(query) < 0.25:
+        # 2. Score mots-clés
+        kw_score = self._kw_score(query)
+        if kw_score < 0.2:
             return {
-                "in_scope":  False,
-                "action":    "reject",
-                "reason":    "Question hors domaine Flask",
-                "response":  self.RESPONSES["non_technical"],
+                "in_scope": False,
+                "action": "reject",
+                "reason": "Score mots-clés faible",
+                "response": self.RESPONSES["non_technical"],
             }
 
-        # Test 3 : retrieval rapide
+        # 3. Retrieval rapide
         quick = self.retriever.search(query, top_k=1, min_score=0.15)
+
         if not quick:
             return {
-                "in_scope":  False,
-                "action":    "reject",
-                "reason":    "Aucun document Flask trouvé",
-                "response":  self.RESPONSES["low_relevance"],
+                "in_scope": False,
+                "action": "reject",
+                "reason": "Aucun résultat",
+                "response": self.RESPONSES["low_relevance"],
             }
 
-        if quick[0].score < self.threshold:
+        score = quick[0].score
+
+        # ✅ Seuil plus strict
+        if score < self.threshold:
             return {
-                "in_scope":  True,
-                "action":    "warn",
-                "reason":    f"Score faible ({quick[0].score:.3f})",
-                "response":  None,
+                "in_scope": True,
+                "action": "warn",
+                "reason": f"Score limite ({score:.3f})",
+                "response": None,
             }
 
         return {
-            "in_scope":  True,
-            "action":    "proceed",
-            "reason":    f"Question Flask valide (score={quick[0].score:.3f})",
-            "response":  None,
+            "in_scope": True,
+            "action": "proceed",
+            "reason": f"OK ({score:.3f})",
+            "response": None,
         }
 
 
