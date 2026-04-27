@@ -129,9 +129,13 @@ Validation
 Final Answer
 
 
-🛠️ Tech Stack
-
-<p align="center"> <img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white"/> <img src="https://img.shields.io/badge/Groq-FF6B00?style=for-the-badge"/> <img src="https://img.shields.io/badge/ChromaDB-00C896?style=for-the-badge"/> <img src="https://img.shields.io/badge/Flask-000000?style=for-the-badge&logo=flask"/> <img src="https://img.shields.io/badge/Streamlit-FF4B4B?style=for-the-badge&logo=streamlit"/> <img src="https://img.shields.io/badge/NLP-DeepLearning-blueviolet?style=for-the-badge"/></p>
+Tech Stack
+Python 🐍
+Groq API 🤖
+ChromaDB 📦
+Sentence Transformers
+Flask / Streamlit
+Pandas / Matplotlib
 
 📊 Evaluation System
 Accuracy measurement
