@@ -1,96 +1,110 @@
-📘 Chatbot RAG Intelligent avec Groq + Agents (version-groq)
-🚀 Présentation du projet
+📘 Chatbot RAG Intelligent (Groq + Agents IA)
 
-Ce projet est un chatbot intelligent basé sur RAG (Retrieval-Augmented Generation) enrichi par une architecture agentique et un modèle LLM rapide via Groq API.
+🔥 Version: version-groq
+🤖 RAG + Agents + Groq LLM + Evaluation
 
-Il permet d’interroger une base de documents et d’obtenir des réponses contextuelles, fiables et optimisées grâce à plusieurs agents spécialisés.
-
-🧠 Architecture du système
-
-Le système repose sur une architecture avancée en plusieurs couches :
-
-1️⃣ Couche RAG (Retrieval-Augmented Generation)
-Embeddings des documents
-Stockage vectoriel (ChromaDB)
-Recherche sémantique
-Récupération des chunks pertinents
-2️⃣ Couche Agentique (intelligence du système)
-
-Le système utilise plusieurs agents :
-
-🔄 RoutingAgent
-détecte si la question est hors-scope
-évite les réponses inutiles
-✍️ QueryReformulationAgent
-améliore la question utilisateur
-optimise le retrieval
-🧪 CodeValidationAgent
-vérifie la validité des extraits de code
-sécurise les réponses techniques
-3️⃣ Couche LLM (Groq)
-Modèle rapide et puissant via Groq
-Génération des réponses finales
-Optimisation du prompt système
-4️⃣ Couche Evaluation
-Evaluation réelle des réponses
-Métriques de performance
-Analyse des résultats
-Visualisation (dashboards)
-📂 Structure du projet
-chatbot_doc_flask/
-│
-├── app.py                  # API / interface principale
-├── chatbot.py             # logique RAG + pipeline
-├── agents.py              # agents IA (routing, reformulation, validation)
-├── test_groq.py           # tests du modèle Groq
-├── evaluation_reelle.py   # évaluation du système
-├── requirements.txt       # dépendances
-│
-├── vector_db/             # base vectorielle ChromaDB
-├── evaluation_output/     # résultats d’évaluation
-└── data_propre/           # documents source
+📌 Table des matières
+🧠 Aperçu
+🏗️ Architecture
 ⚙️ Installation
-1. Cloner le projet
+▶️ Exécution
+📂 Structure du projet
+🤖 Fonctionnalités
+🧪 Pipeline du système
+🛠️ Technologies
+📊 Evaluation
+🚀 Améliorations futures
+👨‍🎓 Auteur
+🧠 Aperçu
+
+Ce projet est un chatbot intelligent basé sur RAG (Retrieval-Augmented Generation) amélioré par une architecture agentique et un modèle LLM rapide via Groq.
+
+👉 Objectif :
+
+répondre aux questions à partir de documents
+améliorer la qualité des réponses avec des agents IA
+optimiser la recherche et la génération
+🏗️ Architecture
+Utilisateur
+    ↓
+RoutingAgent (filtrage hors-scope)
+    ↓
+QueryReformulationAgent (optimisation requête)
+    ↓
+Retrieval (ChromaDB vector store)
+    ↓
+Groq LLM (génération réponse)
+    ↓
+CodeValidationAgent (si code présent)
+    ↓
+Réponse finale
+⚙️ Installation
 git clone https://github.com/siwarBnSalah/chatbot_doc_flask.git
 cd chatbot_doc_flask
 git checkout version-groq
-2. Créer un environnement virtuel
+🔹 Environnement virtuel
 python -m venv venv
 venv\Scripts\activate   # Windows
-3. Installer les dépendances
+🔹 Dépendances
 pip install -r requirements.txt
-4. Configurer les variables d’environnement
-
-Créer un fichier .env :
-
-GROQ_API_KEY=your_api_key_here
-▶️ Lancer le projet
+▶️ Exécution
 python app.py
 
-ou si interface Streamlit :
+ou :
 
 streamlit run app.py
-🧪 Fonctionnalités principales
-
-✔ Chatbot intelligent basé sur RAG
-✔ Agents IA (routing, reformulation, validation)
-✔ LLM rapide via Groq
-✔ Recherche sémantique vectorielle
-✔ Evaluation automatique des réponses
-✔ Architecture modulaire et extensible
-
-📊 Exemple de workflow
-L’utilisateur pose une question
-RoutingAgent vérifie la pertinence
-QueryReformulationAgent optimise la requête
-Retrieval dans ChromaDB
-Groq génère la réponse finale
-Evaluation optionnelle du résultat
-🧠 Technologies utilisées
+📂 Structure du projet
+chatbot_doc_flask/
+│
+├── app.py                 # interface principale
+├── chatbot.py            # pipeline RAG
+├── agents.py             # agents IA
+├── test_groq.py          # test LLM Groq
+├── evaluation_reelle.py  # évaluation système
+├── requirements.txt
+│
+├── vector_db/            # base vectorielle ChromaDB
+├── evaluation_output/    # résultats evaluation
+├── data_propre/          # documents source
+🤖 Fonctionnalités
+✔ Core System
+RAG (retrieval augmented generation)
+recherche sémantique (embeddings)
+génération via Groq LLM
+✔ Agents IA
+RoutingAgent (hors-scope detection)
+QueryReformulationAgent (amélioration requête)
+CodeValidationAgent (validation code)
+✔ Intelligence
+amélioration automatique des questions
+réponses contextualisées
+filtrage intelligent des requêtes
+🧪 Pipeline du système
+Question utilisateur
+        ↓
+Analyse (RoutingAgent)
+        ↓
+Reformulation (Query Agent)
+        ↓
+Recherche vectorielle (ChromaDB)
+        ↓
+LLM Groq
+        ↓
+Validation
+        ↓
+Réponse finale
+🛠️ Technologies
 Python 🐍
-Flask / Streamlit
-LangChain (ou pipeline custom)
 Groq API 🤖
-ChromaDB (vector database)
+ChromaDB 📦
 Sentence Transformers
-Pandas / Matplotlib (evaluation)
+Flask / Streamlit
+Pandas / Matplotlib
+📊 Evaluation
+
+Le système inclut :
+
+accuracy des réponses
+analyse qualitative
+dashboards visuels
+logs d’évaluation
